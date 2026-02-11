@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Will you be my</title>
+  
+  <style>
+    body{
+      margin: 0;
+      padding: 0;
+      background-color: pink;
+    }
+    .main{
+      position: relative;
+      justify-content: center;
+      align-items: center;     
+      margin-top: 15em;
+      text-align: center;
+    }
+    p{
+      color: #c31432;
+      font-weight: 4em;
+      font-size: 30px;
+      font-family: fantasy;
+    }
+    #yes-button{
+      position: relative;
+      background-color: #04AA6D;
+      color: #fff;
+      border: none;
+      text-decoration: none;
+      display: inline-block;
+      padding: 15px 30px;
+      font-size: 24px;
+      cursor: pointer;
+      transition: all 0.5s ease;
+      border-radius: 50px;
+    }
+    #no-button{
+      position: relative;
+      background-color: #ff2800;
+      color: #fff;
+      border: none;
+      text-decoration: none;
+      display: inline-block;
+      padding: 15px 30px;
+      font-size: 24px;
+      cursor: pointer;
+      border-radius: 50px;
+    }
+    img{
+      margin: 30px;
+    }
+    h1{
+      margin-top: 10em;
+      text-align: center;
+      color: #c31432;
+      font-weight: 4em;
+      font-size: 30px;
+      font-family: fantasy;
+    }
+    .yes-index{
+      margin: 50px;
+      margin-left: 25%;
+    }
+  </style>
+  
+</head>
+<body>
+  <div class="main">
+    <p>Will you be my valentine?</p>
+    <input type="button" id="yes-button" value="Yes">
+    
+    <input type="button" id="no-button" value="No">
+    <img src="images/2.webp">
+</div>
+  <script>
+    
+    let allowBack = false;
+    
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+      if (!allowBack) {
+        history.go(1);
+      }
+    };
+    
+    const nobtn = document.getElementById('no-button');
+    const yesbtn = document.getElementById('yes-button');
+    
+    const Text = ["Are you sure?", 
+                  "Really sure?",
+                  "I have feeling for u",
+                  "Are you positive?", 
+                  "Pookie please!", 
+                  "just think about it!", 
+                  "if you say no, I will be really sad...", 
+                  "I will be very sad...", 
+                  "I will be very very sad..."];
+    let i = 0;
+    
+    nobtn.addEventListener('click', ()=> {
+      if (i === Text.length){
+        nobtn.style.display = "none"
+        
+        yesbtn.style.position = "fixed";
+        yesbtn.style.top = "0";
+        yesbtn.style.left = "0";
+        yesbtn.style.width = "100vw";
+        yesbtn.style.height = "100vh";
+        yesbtn.style.fontSize = "74px";
+        yesbtn.style.backgroundColor = "#04AA6D";
+        yesbtn.style.color = "white";
+        yesbtn.style.borderRadius = "1px";
+        yesbtn.style.cursor = "pointer";
+        yesbtn.style.fontFamily = "fantasy";
+        return;
+      };
+      nobtn.value = Text[i++];
+       
+     const currentSize = parseFloat(  
+       window.getComputedStyle(yesbtn).fontSize);  
+       yesbtn.style.fontSize = `${currentSize * 1.5}px`;  
+    });  
+    yesbtn.addEventListener("click", () => {  
+      
+      fetch("https://formspree.io/f/xbdajvpe",
+      {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body: JSON.stringify({
+          answer : "Yes",
+          date : new Date().toLocaleString(),
+          userAgent : navigator.userAgent
+        })
+      });
+      
+    allowBack = true;
+      
+    document.body.innerHTML = `<h1>Knew you would say YES!!</h1>  
+    <img src="images/1.webp" class="yes-index">`;  
+    });
+  </script>
+</body>
+</html>
