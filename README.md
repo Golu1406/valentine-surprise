@@ -6,4 +6,5 @@ After multiple No clicks, the Yes button takes over the screen.
 When Yes is clicked:
 A confirmation screen appears.
 A response is sent via email using Formspree.
+Fetch with fromspeer link...
 The back button is controlled until a final decision is made.
